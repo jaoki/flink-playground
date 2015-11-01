@@ -242,6 +242,25 @@ under the License.
 					<target>${jdk.version}</target> <!-- If you want to use Java 8, change this to "1.8" -->
 				</configuration>
 			</plugin>
+      		<plugin>
+        		<groupId>org.codehaus.mojo</groupId>
+        		<artifactId>exec-maven-plugin</artifactId>
+        		<version>1.4.0</version>
+        		<configuration>
+          			<executable>java</executable>
+          			<arguments>
+<!--
+					<argument>-Dmyproperty=myvalue</argument>
+-->
+					<argument>-classpath</argument>
+					<!-- automatically creates the classpath using all project dependencies,
+						 also adding the project build directory -->
+					<classpath/>
+					<argument>org.myorg.quickstart.WordCount</argument>
+					...
+				  	</arguments>
+				</configuration>
+      		</plugin>
 		</plugins>
 		
 			

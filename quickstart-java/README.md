@@ -1,7 +1,10 @@
+### Excute this
 ```
-mvn clean package -Pbuild-jar
-mvn exec:java  -Dexec.mainClass=org.myorg.quickstart.WordCount
+mvn compile && mvn exec:exec
+```
 
+### Classpath example
+```
 export CP_ROOT=~/.m2/repository/
 export CP=${CP_ROOT}/org/apache/flink/flink-java/0.9.1/flink-java-0.9.1.jar:\
 ${CP_ROOT}/org/apache/flink/flink-shaded-include-yarn/0.9.1/flink-shaded-include-yarn-0.9.1.jar:\
@@ -73,3 +76,4 @@ ${CP_ROOT}/commons-io/commons-io/2.4/commons-io-2.4.jar:\
 ${CP_ROOT}/commons-cli/commons-cli/1.2/commons-cli-1.2.jar
 
 ```
+
