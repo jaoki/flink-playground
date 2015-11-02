@@ -16,24 +16,6 @@ import com.gemstone.gemfire.distributed.ServerLauncher;
 public class GeodeUtil {
 	private static final String REGION_NAME = "region1";
 
-	public static void startLocator(){
-		LocatorLauncher locatorLauncher = new LocatorLauncher.Builder()
-			.setMemberName("locator1")
-//			.setPort(13489)
-			.build();
-		locatorLauncher.start();
-		locatorLauncher.waitOnStatusResponse(30, 5, TimeUnit.SECONDS);
-	}
-	
-	public static void startServer(){
-		ServerLauncher serverLauncher = new ServerLauncher.Builder()
-				.setMemberName("locator1")
-//				.setServerPort(40405)
-				.build();
-		serverLauncher.start();
-		// serverLauncher.wait
-	}
-	
 	public static Cache getCache(){
 		return new CacheFactory()
 //	      		.addPoolLocator("localhost", 10334)
@@ -41,12 +23,8 @@ public class GeodeUtil {
 	      		.create();
 	}
 	
-	public static void hello(){
+	public static void makeData(){
 		Cache cache = getCache();
-
-//	    Region<String, String> region = cache
-//	    		.<String, String>createClientRegionFactory(ClientRegionShortcut.CACHING_PROXY)
-//	    		.create("region");
 
 	    Region<String, String> region = cache
 	    		.<String, String>createRegionFactory(RegionShortcut.REPLICATE)
@@ -55,12 +33,16 @@ public class GeodeUtil {
 	    region.put("1", "Hello");
 	    region.put("2", "World");
 	    
-	    Region<String, String> region2 = cache.<String, String>getRegion(REGION_NAME);
+//	    extracted(cache);
+//	    cache.close();
+	}
+
+	private static void extracted(Cache cache) {
+		Region<String, String> region2 = cache.<String, String>getRegion(REGION_NAME);
 
 	    for (Map.Entry<String, String>  entry : region2.entrySet()) {
 	    	System.out.format("key = %s, value = %s\n", entry.getKey(), entry.getValue());
 	    }
-	    cache.close();
 	}
 
 }

@@ -11,9 +11,7 @@ import flink_geode.integration.GeodeExecutionEnvironment;
 public class WordCount {
 
 	public static void main(String[] args) throws Exception {
-//		GeodeUtil.startLocator();
-//		GeodeUtil.startServer();
-		GeodeUtil.hello();
+		GeodeUtil.makeData();
 
 
 		// set up the execution environment
@@ -22,7 +20,7 @@ public class WordCount {
 		DataSet<Tuple2<String, String>> data = geodeBasedEnv.fromRegion("region1");
 		
 
-		assert data != null;
+//		assert data != null;
 
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		// get input data

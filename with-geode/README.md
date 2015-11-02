@@ -1,4 +1,5 @@
 ### Run geode locator
+run geode locator (no server required)
 
 
 ### Excute this
