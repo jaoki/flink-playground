@@ -44,6 +44,10 @@ public class WordCount {
 	//
 
 	public static void main(String[] args) throws Exception {
+//		GeodeUtil.startLocator();
+//		GeodeUtil.startServer();
+		GeodeUtil.hello();
+
 
 		// set up the execution environment
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();

@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>jaoki.with-geode</groupId>
-	<artifactId>dataset-region</artifactId>
+	<artifactId>flink-geode</artifactId>
 	<version>0.1</version>
 	<packaging>jar</packaging>
 
@@ -27,6 +27,10 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+  		<repository>
+    		<id>spring-releases</id>
+    		<url>http://repo.spring.io/libs-release-remote/</url>
+  		</repository>
 	</repositories>
 	
 	<!-- 
@@ -73,6 +77,18 @@
 			<groupId>org.apache.flink</groupId>
 			<artifactId>flink-clients</artifactId>
 			<version>${flink.version}</version>
+		</dependency>
+<!--
+		<dependency>
+  			<groupId>com.gemstone.gemfire</groupId>
+  			<artifactId>gemfire</artifactId>
+  			<version>8.2.0</version>
+		</dependency>
+-->
+		<dependency>
+  			<groupId>org.apache.geode</groupId>
+  			<artifactId>gemfire-core</artifactId>
+  			<version>1.0.0-incubating-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
@@ -200,19 +216,6 @@
 				</executions>
 			</plugin>
 			
-			<!-- Configure the jar plugin to add the main class as a manifest entry -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<archive>
-						<manifestEntries>
-							<Main-Class>org.myorg.quickstart.Job</Main-Class>
-						</manifestEntries>
-					</archive>
-				</configuration>
-			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -230,9 +233,6 @@
         		<configuration>
           			<executable>java</executable>
           			<arguments>
-<!--
-					<argument>-Dmyproperty=myvalue</argument>
--->
 					<argument>-classpath</argument>
 					<!-- automatically creates the classpath using all project dependencies,
 						 also adding the project build directory -->
@@ -244,98 +244,5 @@
       		</plugin>
 		</plugins>
 		
-			
-		<!-- If you want to use Java 8 Lambda Expressions uncomment the following lines -->
-		<!--
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<configuration>
-						<source>1.8</source>
-						<target>1.8</target>
-						<compilerId>jdt</compilerId>
-					</configuration>
-					<dependencies>
-						<dependency>
-							<groupId>org.eclipse.tycho</groupId>
-							<artifactId>tycho-compiler-jdt</artifactId>
-							<version>0.21.0</version>
-						</dependency>
-					</dependencies>
-				</plugin>
-		
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.apache.maven.plugins</groupId>
-										<artifactId>maven-assembly-plugin</artifactId>
-										<versionRange>[2.4,)</versionRange>
-										<goals>
-											<goal>single</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore/>
-									</action>
-								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.apache.maven.plugins</groupId>
-										<artifactId>maven-compiler-plugin</artifactId>
-										<versionRange>[3.1,)</versionRange>
-										<goals>
-											<goal>testCompile</goal>
-											<goal>compile</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore/>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		-->
-		
 	</build>
-	<profiles>
-		<profile>
-			<!-- A profile that does everyting correctly:
-			We set the Flink dependencies to provided -->
-			<id>build-jar</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<dependencies>
-				<dependency>
-					<groupId>org.apache.flink</groupId>
-					<artifactId>flink-java</artifactId>
-					<version>${flink.version}</version>
-					<scope>provided</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.apache.flink</groupId>
-					<artifactId>flink-streaming-core</artifactId>
-					<version>${flink.version}</version>
-					<scope>provided</scope>
-				</dependency>
-				<dependency>
-					<groupId>org.apache.flink</groupId>
-					<artifactId>flink-clients</artifactId>
-					<version>${flink.version}</version>
-					<scope>provided</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-	</profiles>
 </project>

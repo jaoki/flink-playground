@@ -3,4 +3,6 @@ target
 .project
 .settings
 .swp
+locator*.log
+locator*state.dat
 
