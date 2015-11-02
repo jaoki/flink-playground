@@ -1,4 +1,4 @@
-package org.myorg.quickstart;
+package flink_geode;
 
 import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;

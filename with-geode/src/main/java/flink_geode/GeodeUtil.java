@@ -1,4 +1,4 @@
-package org.myorg.quickstart;
+package flink_geode;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
