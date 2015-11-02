@@ -40,6 +40,7 @@ docker run -i -t \
   -v "${PROJECT_ROOT}:${PROJECT_ROOT}" \
   -v "/home/${USER_NAME}:/home/${USER_NAME}" \
   -p 8081:8081 \
+  -p 8000:8000 \
   ${IMAGE_NAME}-${USER_NAME} \
 
 popd

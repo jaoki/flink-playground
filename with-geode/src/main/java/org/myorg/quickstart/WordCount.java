@@ -14,6 +14,7 @@ public class WordCount {
 		GeodeUtil.hello();
 
 
+		// set up the execution environment
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 
 		// get input data
