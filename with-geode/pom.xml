@@ -15,47 +15,15 @@
 		<jdk.version>1.7</jdk.version>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>apache.snapshots</id>
-			<name>Apache Development Snapshot Repository</name>
-			<url>https://repository.apache.org/content/repositories/snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-  		<repository>
-    		<id>spring-releases</id>
-    		<url>http://repo.spring.io/libs-release-remote/</url>
-  		</repository>
-	</repositories>
-	
-	<!-- 
-		
-		Execute "mvn clean package -Pbuild-jar"
-		to build a jar file out of this project!
-
-		How to use the Flink Quickstart pom:
-
-		a) Adding new dependencies:
-			You can add dependencies to the list below.
-			Please check if the maven-shade-plugin below is filtering out your dependency
-			and remove the exclude from there.
-
-		b) Build a jar for running on the cluster:
-			There are two options for creating a jar from this project
-
-			b.1) "mvn clean package" -> this will create a fat jar which contains all
-					dependencies necessary for running the jar created by this pom in a cluster.
-					The "maven-shade-plugin" excludes everything that is provided on a running Flink cluster.
-
-			b.2) "mvn clean package -Pbuild-jar" -> This will also create a fat-jar, but with much
-					nicer dependency exclusion handling. This approach is preferred and leads to
-					much cleaner jar files.
-	-->
+  	<profiles>
+    	<profile>
+      		<id>debug</id>
+      		<properties>
+        		<java.debug.param1>-Xdebug</java.debug.param1>
+        		<java.debug.param2>-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000</java.debug.param2>
+      		</properties>
+    	</profile>
+  	</profiles>
 
 	<dependencies>
 		<dependency>
@@ -112,13 +80,14 @@
         		<configuration>
           			<executable>java</executable>
           			<arguments>
+						<argument>-ea</argument>
 						<argument>-classpath</argument>
 						<!-- automatically creates the classpath using all project dependencies,
 						 	also adding the project build directory -->
 						<classpath/>
-						<argument>-Xdebug</argument>
-						<argument>-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000</argument>
-						<argument>org.myorg.quickstart.WordCount</argument>
+						<argument>${java.debug.param1}</argument>
+						<argument>${java.debug.param2}</argument>
+						<argument>flink_geode.WordCount</argument>
 
 				  	</arguments>
 				</configuration>
@@ -127,4 +96,23 @@
 		</plugins>
 		
 	</build>
+
+	<repositories>
+		<repository>
+			<id>apache.snapshots</id>
+			<name>Apache Development Snapshot Repository</name>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+  		<repository>
+    		<id>spring-releases</id>
+    		<url>http://repo.spring.io/libs-release-remote/</url>
+  		</repository>
+	</repositories>
+	
 </project>

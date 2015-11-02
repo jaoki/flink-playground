@@ -5,5 +5,6 @@
 ```
 mvn compile
 mvn exec:exec
+mvn exec:exec -Pdebug // remote debug
 ```
 

@@ -6,6 +6,8 @@ import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.util.Collector;
 
+import flink_geode.integration.GeodeExecutionEnvironment;
+
 public class WordCount {
 
 	public static void main(String[] args) throws Exception {
@@ -15,8 +17,14 @@ public class WordCount {
 
 
 		// set up the execution environment
-		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+		final GeodeExecutionEnvironment geodeBasedEnv = new GeodeExecutionEnvironment();
+		
+		DataSet<Tuple2<String, String>> data = geodeBasedEnv.fromRegion("region1");
+		
 
+		assert data != null;
+
+		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		// get input data
 		DataSet<String> text = env.fromElements(
 				"To be, or not to be,--that is the question:--",
