@@ -27,7 +27,7 @@ public class GeodeExecutionEnvironment extends ExecutionEnvironment{
 	public <T> DataSet<T> fromRegion(String regionName){
 		Cache cache = GeodeUtil.getCache();
 		Region<String, String> region2 = cache.<String, String>getRegion(regionName);
-		ArrayList arrayList = new ArrayList(region2.entrySet());
+		ArrayList<Map.Entry<String, String>> arrayList = new ArrayList<Map.Entry<String, String>>(region2.entrySet());
 
 //	    for (Map.Entry<String, String>  entry : region2.entrySet()) {
 //	    	System.out.format("key = %s, value = %s\n", entry.getKey(), entry.getValue());
