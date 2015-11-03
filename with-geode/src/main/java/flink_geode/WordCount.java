@@ -2,6 +2,8 @@ package flink_geode;
 
 import org.apache.flink.api.java.DataSet;
 import org.apache.flink.api.java.ExecutionEnvironment;
+import org.apache.flink.api.java.operators.FlatMapOperator;
+import org.apache.flink.api.java.operators.UnsortedGrouping;
 import org.apache.flink.api.common.functions.FlatMapFunction;
 import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.util.Collector;
@@ -17,7 +19,7 @@ public class WordCount {
 		// set up the execution environment
 		final GeodeExecutionEnvironment geodeBasedEnv = new GeodeExecutionEnvironment();
 		
-		DataSet<Tuple2<String, String>> data = geodeBasedEnv.fromRegion("region1");
+//		DataSet<Tuple2<String, String>> data = geodeBasedEnv.fromRegion("region1");
 		
 
 //		assert data != null;
@@ -31,17 +33,23 @@ public class WordCount {
 				"Or to take arms against a sea of troubles,"
 				);
 
-		DataSet<Tuple2<String, Integer>> counts =
-				// split up the lines in pairs (2-tuples) containing: (word,1)
-				text.flatMap(new LineSplitter())
-				// group by the tuple field "0" and sum up tuple field "1"
-				.groupBy(0)
-				.sum(1);
+		// split up the lines in pairs (2-tuples) containing: (word,1)
+		FlatMapOperator<String, Tuple2<String, Integer>> flatten = text.flatMap(new LineSplitter());
+
+		// group by the tuple field "0" and sum up tuple field "1"
+		UnsortedGrouping<Tuple2<String, Integer>> grouped = flatten.groupBy(0);
+
+		DataSet<Tuple2<String, Integer>> counts = grouped.sum(1);
 
 		// execute and print result
 		counts.print();
 
 	}
+
+	// http://www.programcreek.com/java-api-examples/index.php?api=org.apache.flink.api.java.operators.DataSource
+	 public static class GeodeRegision extends Tuple2<String, String> {
+         private static final long serialVersionUID = -1;
+     }
 
 	/**
 	 * Implements the string tokenizer that splits sentences into words as a user-defined
