@@ -11,3 +11,10 @@ mvn exec:exec
 mvn exec:exec -Pdebug // remote debug
 ```
 
+### TODO
+- Can I use file scheme aproach described here https://ci.apache.org/projects/flink/flink-docs-release-0.8/example_connectors.html
+"geode://...."
+
+- what is sink
+
+

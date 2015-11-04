@@ -57,11 +57,12 @@ public class GeodeExecutionEnvironment extends ExecutionEnvironment{
 		
 	}
 
-	@Override
-	public JobExecutionResult execute(String jobName) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public JobExecutionResult execute(String jobName) throws Exception {
+////		this.execute();
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 	@Override
 	public String getExecutionPlan() throws Exception {
