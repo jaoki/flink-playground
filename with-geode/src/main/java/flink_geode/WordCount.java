@@ -9,6 +9,7 @@ import org.apache.flink.api.java.tuple.Tuple2;
 import org.apache.flink.util.Collector;
 
 import flink_geode.integration.GeodeExecutionEnvironment;
+import flink_geode.integration.GeodeRegionEntry;
 
 public class WordCount {
 
@@ -19,6 +20,7 @@ public class WordCount {
 		// set up the execution environment
 		final GeodeExecutionEnvironment geodeBasedEnv = new GeodeExecutionEnvironment();
 		
+		DataSet<GeodeRegionEntry> data = geodeBasedEnv.fromRegion("region1");
 //		DataSet<Tuple2<String, String>> data = geodeBasedEnv.fromRegion("region1");
 		
 
@@ -45,11 +47,6 @@ public class WordCount {
 		counts.print();
 
 	}
-
-	// http://www.programcreek.com/java-api-examples/index.php?api=org.apache.flink.api.java.operators.DataSource
-	 public static class GeodeRegision extends Tuple2<String, String> {
-         private static final long serialVersionUID = -1;
-     }
 
 	/**
 	 * Implements the string tokenizer that splits sentences into words as a user-defined
