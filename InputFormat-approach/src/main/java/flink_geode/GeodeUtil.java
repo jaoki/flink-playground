@@ -30,14 +30,25 @@ public class GeodeUtil {
 	    		.<String, String>createRegionFactory(RegionShortcut.REPLICATE)
 	    		.create(REGION_NAME);
 
-	    region.put("1", "Hello");
-	    region.put("2", "World");
+	    region.put("1", "Hello World");
+	    region.put("2", "World Wide Web");
+	    region.put("3", "World Wide Web");
+	    region.put("4", "World Wide Web");
+	    region.put("5", "Web2.0");
+	    region.put("6", "Machine Learning");
+	    region.put("7", "World Wide Web");
+	    region.put("8", "World Wide Web");
+	    region.put("9", "World Wide Web");
+	    region.put("10", "World Wide Web");
+	    region.put("11", "World Wide Web");
+	    region.put("12", "Mobile");
 	    
 //	    extracted(cache);
 //	    cache.close();
 	}
 
-	private static void extracted(Cache cache) {
+	private static void extracted() {
+		Cache cache = getCache();
 		Region<String, String> region2 = cache.<String, String>getRegion(REGION_NAME);
 
 	    for (Map.Entry<String, String>  entry : region2.entrySet()) {
