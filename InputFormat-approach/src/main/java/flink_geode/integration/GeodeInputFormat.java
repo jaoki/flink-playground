@@ -6,59 +6,76 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.apache.flink.api.common.io.GenericInputFormat;
-import org.apache.flink.core.io.GenericInputSplit;
+import org.apache.flink.api.common.io.DefaultInputSplitAssigner;
+import org.apache.flink.api.common.io.InputFormat;
+import org.apache.flink.api.common.io.statistics.BaseStatistics;
+import org.apache.flink.configuration.Configuration;
+import org.apache.flink.core.io.InputSplitAssigner;
 
 import com.gemstone.gemfire.cache.Cache;
 import com.gemstone.gemfire.cache.Region;
 
 import flink_geode.GeodeUtil;
 
-public class GeodeInputFormat extends GenericInputFormat<GeodeRegionEntry> {
+public class GeodeInputFormat<K, V> implements InputFormat<GeodeRegionEntry<K, V>, GeodeInputSplit<K, V>> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String regionName = null;
 	private int currentRecord;
-	private GeodeInputSplit currentSplit;
-	private Region<String, String> region;
+	private GeodeInputSplit<K, V> currentSplit;
 	
 	public GeodeInputFormat(String regionName){
 		this.regionName = regionName;
 	}
 
 	@Override
-	public void open(GenericInputSplit split) throws IOException {
-		this.currentRecord = 0;
-		this.currentSplit = (GeodeInputSplit)split;
-		Cache cache = GeodeUtil.getCache();
-		this.region = cache.<String, String>getRegion(this.regionName);
-	}
-
+	public void configure(Configuration parameters) {}
 
 	@Override
-	public GenericInputSplit[] createInputSplits(int minNumSplits) throws IOException {
+	public BaseStatistics getStatistics(BaseStatistics cachedStatistics) throws IOException {
+		return cachedStatistics;
+	}
 
-		final List<GeodeInputSplit> inputSplits = new ArrayList<GeodeInputSplit>(minNumSplits);
+	@Override
+	public InputSplitAssigner getInputSplitAssigner(GeodeInputSplit<K, V>[] splits) {
+		return new DefaultInputSplitAssigner(splits);
+	}
+
+	@Override
+	public GeodeInputSplit<K, V>[] createInputSplits(int minNumSplits) throws IOException {
+
+		Cache cache = GeodeUtil.getCache();
+		Region<K, V> region = cache.<K, V>getRegion(this.regionName);
 
 		int recordPerSplit = region.size() / minNumSplits;
-		Iterator<Entry<String, String>> regionIter = region.entrySet().iterator();
+		Iterator<Entry<K, V>> regionIter = region.entrySet().iterator();
+		
+		@SuppressWarnings("unchecked")
+		GeodeInputSplit<K, V>[] result = (GeodeInputSplit<K, V>[])new GeodeInputSplit[minNumSplits];
 
 		for(int splitNumber = 0 ; splitNumber < minNumSplits; splitNumber++){
-			List<GeodeRegionEntry> data = new ArrayList<>();
+			List<GeodeRegionEntry<K, V>> data = new ArrayList<>();
 			for(int i = 0; i < recordPerSplit ; i++){
 				if(!regionIter.hasNext()){
 					break;
 				}
-				Entry<String, String> entry = regionIter.next();
-				data.add(new GeodeRegionEntry(entry));
+				Entry<K, V> entry = regionIter.next();
+				data.add(new GeodeRegionEntry<K, V>(entry));
 			}
-			GeodeInputSplit gis = new GeodeInputSplit(splitNumber, minNumSplits, data);
-			inputSplits.add(gis);
+			GeodeInputSplit<K, V> gis = new GeodeInputSplit<K, V>(splitNumber, minNumSplits, data);
+			result[splitNumber] = gis;
 		}
 
-		return inputSplits.toArray(new GeodeInputSplit[inputSplits.size()]);
+		return result;
 	}
+
+	@Override
+	public void open(GeodeInputSplit<K, V> split) throws IOException {
+		this.currentRecord = 0;
+		this.currentSplit = split;
+	}
+
 
 	@Override
 	public boolean reachedEnd() throws IOException {
@@ -66,10 +83,13 @@ public class GeodeInputFormat extends GenericInputFormat<GeodeRegionEntry> {
 	}
 
 	@Override
-	public GeodeRegionEntry nextRecord(GeodeRegionEntry reuse) throws IOException {
-		GeodeRegionEntry entry = currentSplit.getData().get(currentRecord);
+	public GeodeRegionEntry<K, V> nextRecord(GeodeRegionEntry<K, V> reuse) throws IOException {
+		GeodeRegionEntry<K, V> entry = currentSplit.getData().get(currentRecord);
 		currentRecord++;
 		return entry;
 	}
+
+	@Override
+	public void close() throws IOException {}
 
 }

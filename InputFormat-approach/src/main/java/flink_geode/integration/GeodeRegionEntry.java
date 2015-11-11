@@ -3,28 +3,28 @@ package flink_geode.integration;
 import java.io.Serializable;
 import java.util.Map;
 
-public class GeodeRegionEntry implements Serializable{
+public class GeodeRegionEntry<K, V> implements Serializable{
 	private static final long serialVersionUID = 1L;
 
-	private String key;
-	private String value;
+	private K key;
+	private V value;
 
     public GeodeRegionEntry(){}
      
-    public GeodeRegionEntry(Map.Entry<String, String> entry){
+    public GeodeRegionEntry(Map.Entry<K, V> entry){
 		this.key = entry.getKey();
     	this.value = entry.getValue();
     }
     
     @Override
     public String toString() {
-    	return key + ":" + value;
+    	return key.toString() + ":" + value.toString();
     }
     
-    public String getKey() { return key; }
-	public void setKey(String key) { this.key = key; }
+    public K getKey() { return key; }
+	public void setKey(K key) { this.key = key; }
 
-	public String getValue() { return value; }
-	public void setValue(String value) { this.value = value; }
+	public V getValue() { return value; }
+	public void setValue(V value) { this.value = value; }
 	
  }
