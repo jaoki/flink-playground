@@ -12,7 +12,11 @@ mvn exec:exec -Pdebug // remote debug
 ```
 
 ### TODO
-- Make GeodeEntry etc. generic
+- InputFormat anatomy diagram
+
+- Implements BaseStatistics
+
+o Make GeodeEntry etc. generic
 
 o Use InputFormat to get geode data
 	https://github.com/apache/flink/blob/master//flink-core/src/main/java/org/apache/flink/api/common/io/InputFormat.java
