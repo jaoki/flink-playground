@@ -12,15 +12,15 @@ mvn exec:exec -Pdebug // remote debug
 ```
 
 ### TODO
-- InputFormat anatomy diagram
 - Implements BaseStatistics
 
-o Make GeodeEntry etc. generic
 - Gode Partitioned region support
 - Some edge case testing (when region size() is 0, 1, or 2)
 - mvn test instead of mvn exec:exec
 - GeodeOuptputFormat
-- InputFormat Sequence diagram
+- InputFormat Sequence diagram. InputFormat anatomy diagram
+
+o Make GeodeEntry etc. generic
 
 o Use InputFormat to get geode data
 	https://github.com/apache/flink/blob/master//flink-core/src/main/java/org/apache/flink/api/common/io/InputFormat.java
