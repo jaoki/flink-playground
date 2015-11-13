@@ -1,8 +1,15 @@
+# eclipse
 .classpath
-target
 .project
 .settings
-.swp
+
+# mvn
+target
+
+# Editor
+*.swp
+
+
 locator*.log
 locator*state.dat
 
