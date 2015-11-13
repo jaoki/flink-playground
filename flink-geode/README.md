@@ -12,13 +12,12 @@ mvn exec:exec -Pdebug // remote debug
 ```
 
 ### TODO
+- InputFormat Sequence diagram. InputFormat anatomy diagram
+- mvn test instead of mvn exec:exec
 - Implements BaseStatistics
-
 - Gode Partitioned region support
 - Some edge case testing (when region size() is 0, 1, or 2)
-- mvn test instead of mvn exec:exec
 - GeodeOuptputFormat
-- InputFormat Sequence diagram. InputFormat anatomy diagram
 
 o Make GeodeEntry etc. generic
 
