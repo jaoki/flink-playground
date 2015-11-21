@@ -3,6 +3,13 @@
 mvn test
 ```
 
+run specific example
+```
+mvn test -Dtest=WordCountFromElementsStringTest
+```
+
+
+
 ### Classpath example
 ```
 export CP_ROOT=~/.m2/repository/
