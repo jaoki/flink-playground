@@ -1,0 +1,16 @@
+[INFO] data this 
+[INFO] data that
+[INFO] some info
+[WARN] warning 
+[DEBUG] here is the secret
+[WARN] maybe not good
+[INFO] curl
+[WARN] maybe not too bad
+[ERROR] bad idea
+[DEBUG] behind the scene
+[WARN] do not do this
+[DEBUG] debug info
+[ERROR] Got an error
+[DEBUG] workaround
+
+
