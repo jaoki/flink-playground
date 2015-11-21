@@ -1,6 +1,6 @@
 ### Excute this
 ```
-mvn compile && mvn exec:exec
+mvn test
 ```
 
 ### Classpath example
