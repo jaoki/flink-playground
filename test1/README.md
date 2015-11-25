@@ -8,6 +8,10 @@ run specific example
 mvn test -Dtest=WordCountFromElementsStringTest
 ```
 
+run in debug mode
+```
+mvn test -Dmaven.surefire.debug
+```
 
 
 ### Classpath example

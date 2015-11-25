@@ -12,6 +12,7 @@ public class WordCountReadTextFileTest {
 	public void test1() throws Exception {
 
 		final ExecutionEnvironment env = ExecutionEnvironment.createLocalEnvironment();     // [1]
+//		env.setParallelism(1);
 		String currentDir = System.getProperty("user.dir");
 		DataSet<String> data = env.readTextFile("file:///" + currentDir + "/target/test-classes/text1.txt");   // [2]
 		data.filter(new FilterFunction<String>(){                     // [3]

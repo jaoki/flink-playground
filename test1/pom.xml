@@ -21,7 +21,7 @@ under the License.
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>flink_playground</groupId>
-	<artifactId>test1</artifactId>
+	<artifactId>flink-test1</artifactId>
 	<version>0.1</version>
 	<packaging>jar</packaging>
 
