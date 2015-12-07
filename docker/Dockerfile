@@ -32,18 +32,8 @@ RUN cd /usr/local/lib && rm -rf apache-maven-3.0.5-bin.tar.gz
 ENV M2_HOME /usr/local/lib/apache-maven-3.0.5
 ENV PATH $PATH:$JAVA_HOME/bin:$M2_HOME/bin
 
-RUN yum install -y gem ruby-devel make gcc gcc-c++ python-setuptools
-RUN gem install jekyll -v 2.5.3
-RUN gem install kramdown -v 1.9.0
-RUN gem install pygments.rb -v 0.6.3
-RUN gem install therubyracer -v 0.12.2
-RUN easy_install Pygments
-
 
 CMD echo "" && \
 	echo "start-local.sh : to start JobManger's web frontend http://localhost:8081" && \
-	echo "for Document" && \
-	echo "  docs/build_docs.sh -p &" && \
-	echo "  and access http://localhost:4000" && \
     bash
 
