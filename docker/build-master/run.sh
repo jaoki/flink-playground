@@ -4,7 +4,7 @@ set -e -x -u
 
 SCRIPT_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-export IMAGE_NAME="jaoki/flink-playground"
+export IMAGE_NAME="jaoki/build-master"
 
 pushd ${SCRIPT_DIR}
 
@@ -29,19 +29,11 @@ RUN groupadd --non-unique -g ${GROUP_ID} ${USER_NAME} && \
 ENV  HOME /home/${USER_NAME}
 UserSpecificDocker
 
-PROJECT_ROOT=${SCRIPT_DIR}/..
-
-pushd ${PROJECT_ROOT}
-
 docker run -i -t \
   --rm=true \
-  -w ${PROJECT_ROOT} \
+  -w $(pwd) \
   -u "${USER}" \
-  -v "${PROJECT_ROOT}:${PROJECT_ROOT}" \
   -v "/home/${USER_NAME}:/home/${USER_NAME}" \
-  -p 8081:8081 \
-  -p 8000:8000 \
-  ${IMAGE_NAME}-${USER_NAME}
-
-popd
+  ${IMAGE_NAME}-${USER_NAME} \
+  bash
 
